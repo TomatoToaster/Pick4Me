@@ -1,0 +1,27 @@
+{
+  "name": "pick4me",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "node server.js",
+    "start:dev": "webpack-dev-server",
+    "all": "npm run build && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TomatoToaster/Pick4Me.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TomatoToaster/Pick4Me/issues"
+  },
+  "homepage": "https://github.com/TomatoToaster/Pick4Me#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "webpack": "^4.16.5"
+  }
+}
