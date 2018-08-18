@@ -64,3 +64,11 @@ select * from Location;
 
 insert into User_Answers_Question (user_id, question_id, answer)
 values (1, 2, 'ans1');
+
+select *
+from Question
+where question_id in (
+	select question_id
+    from User_Answers_Question
+    where user not in User_id
+);

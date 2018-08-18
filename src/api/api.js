@@ -28,7 +28,7 @@ api.get('/', (req, res) => {
 api.post('/user', (req, res) => {
     let account = req.body;
     if (!account.name || !account.password)
-        send_error.invalid_input(res), err;
+        send_error.invalid_input(res);
     else {
         db.query("insert into User set ?", account, (err, result) => {
             if (err && err.sqlMessage.includes("Duplicate entry"))
@@ -50,7 +50,6 @@ api.post('/user', (req, res) => {
 api.get('/user', (req, res) => {
     db.query('select * from User', (err, result) => {
         if (err) {
-            console.log(err);
             send_error.internal_server(res, err);
         } else {
             res.send(result);
@@ -87,8 +86,7 @@ api.get('/user/:id', (req, res) => {
 api.post('/question', (req, res) => {
     let question = req.body;
     if (!Number.isInteger(question.poster_id)) {
-        console.log('oh no')
-        return
+        send_error.invalid_input(res);
     }
     if (!question.poster_id || !question.question || !question.ans1 || !question.ans2)
         send_error.invalid_input(res), err;
@@ -112,7 +110,6 @@ api.post('/question', (req, res) => {
 api.get('/question', (req, res) => {
     db.query('select * from Question', (err, result) => {
         if (err) {
-            console.log(err);
             send_error.internal_server(res, err);
         } else {
             res.send(result);
@@ -139,18 +136,27 @@ api.get('/question/:id', (req, res) => {
 });
 
 /**
- * Get all Questions that a User hasn't answered
+ * Get all Unanswered Questions for a User
  */
 /**
  * Get Question by id
  * a param of the url should be the id
  */
-api.get('/question/:id', (req, res) => {
-    let id = parseInt(req.params.id);
-    if (!Number.isInteger(id))
+api.get('/question/unanswered/:user_id', (req, res) => {
+    let u_id = parseInt(req.params.user_id);
+    if (!Number.isInteger(u_id))
         send_error.invalid_input(res);
     else {
-        db.query('select * from Question where question_id = ?', id, (err, result) => {
+        let sql = `
+            select *
+            from Question
+            where question_id not in (
+                select question_id
+                from User_Answers_Question
+                where user_id = ?
+            );
+        `
+        db.query(sql, u_id, (err, result) => {
             if (err)
                 send_error.internal_server(res, err);
             else
@@ -170,7 +176,7 @@ api.put('/answer/:question_id/:user_id/:answer_num', (req, res) => {
     let u_id = parseInt(req.params.user_id);
     let a_num = parseInt(req.params.answer_num);
     if (!Number.isInteger(q_id) || !Number.isInteger(u_id) || !Number.isInteger(a_num) || a_num < 1 || a_num > 4) {
-        send_error.invalid_input(res, err);
+        send_error.invalid_input(res);
     }
     else {
         let answer = {
@@ -199,9 +205,8 @@ api.get('/answer/:question_id/:user_id', (req, res) => {
     let q_id = parseInt(req.params.question_id);
     let u_id = parseInt(req.params.user_id);
     if (!Number.isInteger(q_id) || !Number.isInteger(u_id)) {
-        send_error.invalid_input(res, err);
-    }
-    else {
+        send_error.invalid_input(res);
+    } else {
         let key = [ q_id, u_id]
         db.query('select * from User_Answers_Question where question_id = ? and user_id = ?', key, (err, result) => {
             if (err)
@@ -212,6 +217,31 @@ api.get('/answer/:question_id/:user_id', (req, res) => {
     }
 });
 
+// Results
+// =============================================================================
+
+/**
+ * Gets results of a question (total will have to be computed on its own)
+ */
+api.get('/result/:question_id', (req, res) => {
+    let q_id = parseInt(req.params.question_id);
+    if (!Number.isInteger(q_id)) {
+        send_error.invalid_input(res);
+    } else {
+        let sql = `
+            select answer, count(*) as count
+            from User_Answers_Question
+            where question_id = ?
+            group by answer;
+        `
+        db.query(sql, q_id, (err, result) => {
+            if (err)
+                send_error.internal_server(res, err);
+            else
+                res.send(result);
+        })
+    }
+});
 
 
 // Location
