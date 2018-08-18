@@ -5,7 +5,8 @@ var config = {
 config.mysql = {
   host: 'hostip',
   user: 'username',
-  password: 'password'
+  password: 'password',
+  database: 'pick4me'
 }
 
 module.exports = config;
