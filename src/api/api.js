@@ -1,19 +1,22 @@
 // ROUTES FOR OUR API
 // =============================================================================
-const api = express.Router();              // get an instance of the express Router (this will be like an independent express app)
-const bodyParser = import('body-parser');
-
-
-// configure app to use bodyParser()
-// this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+import { Router } from 'express';
+import db from './db'
+const api = Router();              // get an instance of the express Router (this will be where the api calls happen)
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-api.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
+api.get('/', (req, res) => {
+
+    db.query('Select * from Location', (err, result) => {
+        if (err) console.log(err);
+        res.send("Result : " + JSON.stringify(result));
+    });
 });
 
 // more routes for our API will happen here
+api.post('/', (req, res) => {
+    // console.log(req.body);
+    // res.json(req.body);
+});
 
 export default api;
