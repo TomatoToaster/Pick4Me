@@ -14,7 +14,7 @@ create table User (
   image_path varchar(256),
   points int not null default 0,
   password varchar(45) not null,
-  last_login_id int default 0,
+  last_login_id int default 1,
 
   constraint last_login_location foreign key(last_login_id) references Location(location_id)
 );
@@ -28,8 +28,8 @@ create table Question (
   ans3 varchar(45),
   ans4 varchar(45),
   image_path varchar(256),
-  post_time datetime not null,
-  exp_time int not null,
+  post_time datetime not null default NOW(),
+  exp_time int not null default 24,
   constraint question_poster_id foreign key(poster_id) references User(user_id)
 );
 
@@ -57,4 +57,7 @@ create table User_Answers_Question (
 insert into Location (location_id, name)
 values (1, "Unknown");
 
+select * from User;
+
 select * from Location;
+
