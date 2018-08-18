@@ -19,6 +19,7 @@ const config = {
 							{
 								loader: 'babel-loader',
 									options: {
+										babelrc: false,
 										presets: ['react']
 									}
 							}
