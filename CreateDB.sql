@@ -50,7 +50,8 @@ create table User_Answers_Question (
   question_id int not null,
   answer ENUM('ans1', 'ans2', 'ans3', 'ans4'),
   constraint uaq_u_id foreign key(user_id) references User(user_id),
-  constraint uaq_q_id foreign key(user_id) references Question(question_id)
+  constraint uaq_q_id foreign key(user_id) references Question(question_id),
+  primary key(user_id, question_id)
 );
 
 -- Standard Default Insert statements
@@ -61,3 +62,5 @@ select * from User;
 
 select * from Location;
 
+insert into User_Answers_Question (user_id, question_id, answer)
+values (1, 2, 'ans1');
