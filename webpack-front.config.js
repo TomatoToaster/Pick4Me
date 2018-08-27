@@ -1,5 +1,5 @@
 const path = require('path');
-const htmlwebpackplugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const app_dir = path.resolve(__dirname, 'dist/front');
 const src_dir = path.resolve(__dirname, 'src/front');
@@ -34,7 +34,7 @@ const config = {
 		],
 	},
 	plugins: [
-		new htmlwebpackplugin({
+		new HtmlWebpackPlugin({
 			hash: true,
 			title: 'Pick for Me!',
 			template: `${src_dir}/index.html`,
