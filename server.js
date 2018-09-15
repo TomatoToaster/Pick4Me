@@ -1,4 +1,4 @@
-// Serves both the express api and the react webapp on this server
+// Serves up both the express api and the react webapp on this server
 
 var express = require('express'); // call express
 var app = express(); // define our app using express
