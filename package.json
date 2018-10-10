@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "build-api": "babel src/api --out-dir dist/api",
-    "build-front": "webpack --config ./webpack-front.config.js",
+    "build-front": "webpack",
     "start": "node server.js",
+    "start:dev": "webpack-dev-server",
     "api": "npm run build-api && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,18 +22,33 @@
   },
   "homepage": "https://github.com/TomatoToaster/Pick4Me#readme",
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.0",
     "express": "^4.16.3",
     "html-webpack-plugin": "^3.2.0",
     "mysql": "^2.16.0",
+    "node-sass": "^4.9.3",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-router-dom": "^4.3.1",
+    "sass-loader": "^7.1.0",
+    "semantic-ui-react": "^0.82.5",
+    "style-loader": "^0.23.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
     "webpack-dev-server": "^3.1.5"
   }
 }

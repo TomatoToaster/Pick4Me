@@ -1,3 +1,6 @@
+/**
+ * Configuration for the Front End component of this Project
+ */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -14,13 +17,14 @@ const config = {
 	module: {
 		rules: [
 			{
-				test: /\.js?$/,
+				test: /\.(js|jsx)?$/,
 				use: [
 							{
 								loader: 'babel-loader',
 									options: {
 										babelrc: false,
-										presets: ['react']
+										presets: ['react'],
+										plugins: ["transform-class-properties"]
 									}
 							}
 				],
