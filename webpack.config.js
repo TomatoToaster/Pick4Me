@@ -45,6 +45,7 @@ const config = {
 			filename: `${app_dir}/index.html`,
 		}),
 	],
+	devtool: 'eval-source-map',
 };
 
 module.exports = config;
