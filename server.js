@@ -8,6 +8,8 @@ var bodyParser = require('body-parser')
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/dist/front'))
+
 
 var api = require('./dist/api/api'); // import my bundled api
 var config = require('./Config');
@@ -16,6 +18,11 @@ const port = process.env.PORT || config.port;      // set our port
 
 // Route all the calls prefixed with /api to the api we've imported
 app.use('/api', api);
+
+// Sends the front end application up
+app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname + '/dist/index.html'));
+})
 
 // START THE SERVER
 // =============================================================================
