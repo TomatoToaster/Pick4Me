@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Container, Card, Button, Image } from 'semantic-ui-react';
 import { shuffle } from 'lodash';
-import { setTimeout } from 'timers';
 
 const COLORS = ['orange', 'red', 'blue', 'green'];
 const PLACEHOLDER_IMAGE_URL = 'https://placeimg.com/200/200/any';
